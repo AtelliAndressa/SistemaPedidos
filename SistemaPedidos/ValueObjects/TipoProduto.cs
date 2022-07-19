@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace SistemaPedidos.ValueObjects
 {
-    public class TipoProduto
+    public enum TipoProduto
     {
+        MercadoriaParaRevenda,
+
+        Embalagem,
+
+        Servico
     }
 }

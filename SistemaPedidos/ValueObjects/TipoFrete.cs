@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace SistemaPedidos.ValueObjects
 {
-    public class TipoFrete
+    /// <summary>
+    /// CIF - remetente paga o frete
+    /// FOB - destinatário paga o frete
+    /// SemFrete - retirado na loja
+    /// </summary>
+    public enum TipoFrete
     {
+        CIF,
+
+        FOB,
+
+        SemFrete
     }
 }
