@@ -6,6 +6,12 @@ namespace SistemaPedidos.Data.Configurations
 {
     public class ClienteConfigurations : IEntityTypeConfiguration<Cliente>
     {
+        /// <summary>
+        /// Aqui configuramos todo o modelo de dados 
+        /// individualmente para cada entidade, 
+        /// fazemos o mapeamento do modelo de dados com Fluent API
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Cliente> builder)
         {
             builder.ToTable("Clientes");//nome tabela

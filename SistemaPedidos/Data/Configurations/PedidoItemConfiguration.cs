@@ -11,6 +11,10 @@ namespace SistemaPedidos.Data.Configurations
 {
     public class PedidoItemConfiguration : IEntityTypeConfiguration<PedidoItem>
     {
+        /// <summary>
+        /// fazemos o mapeamento do modelo de dados com Fluent API
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<PedidoItem> builder)
         {
             builder.ToTable("PedidoItens");

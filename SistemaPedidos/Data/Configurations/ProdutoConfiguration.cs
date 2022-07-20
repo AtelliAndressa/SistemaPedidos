@@ -11,6 +11,10 @@ namespace SistemaPedidos.Data.Configurations
 {
     public class ProdutoConfiguration : IEntityTypeConfiguration<Produto>
     {
+        /// <summary>
+        /// fazemos o mapeamento do modelo de dados com Fluent API
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Produto> builder)
         {
             builder.ToTable("Produtos");
