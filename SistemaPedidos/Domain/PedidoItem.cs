@@ -28,7 +28,7 @@ namespace SistemaPedidos.Domain
 
         public decimal Valor { get; set; }
 
-        public decimal ValorDesconto { get; set; }
+        public decimal Desconto { get; set; }
 
     }
 }

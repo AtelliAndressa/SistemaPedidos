@@ -25,6 +25,6 @@ namespace SistemaPedidos.Domain
 
         public string Observacao { get; set; }
 
-        public ICollection<PedidoItem> Item { get; set; }
+        public ICollection<PedidoItem> Itens { get; set; }
     }
 }
