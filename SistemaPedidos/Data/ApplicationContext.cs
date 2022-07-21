@@ -7,6 +7,8 @@ namespace SistemaPedidos.Data
     {
 
         public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
         /// <summary>
         /// Aqui informamos qual o provider que estamos utilizando, 
