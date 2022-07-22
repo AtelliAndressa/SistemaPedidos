@@ -23,15 +23,15 @@ namespace SistemaPedidos
                 // aplique uma regra de negocio aqui, tipo finalizar aplicação ou realizar algo
             }
 
-            //InserirDados();
+            InserirDados();
             //InserirDadosEmMassa();
             //ConsultarDados();
             //CadastrarPedido();
             //ConsultarPedidoCarregamentoAdiantado();
             //AtualizarDados();
-            RemoverRegistro();
+            //RemoverRegistro();
         }
-
+        /*
         private static void RemoverRegistro()
         {
             using var db = new SistemaPedidos.Data.ApplicationContext();
@@ -177,7 +177,7 @@ namespace SistemaPedidos
 
             var registros = db.SaveChanges();
             Console.WriteLine($"Total Registro(s): {registros}");
-        }
+        }*/
 
         private static void InserirDados()
         {
@@ -190,14 +190,23 @@ namespace SistemaPedidos
                 Ativo = true
             };
 
+            //aqui ele vai rastrear(mapear) os novos registros individualmente:
             using var db = new Data.ApplicationContext();
-            db.Produtos.Add(produto);
-            db.Set<Produto>().Add(produto);
-            db.Entry(produto).State = EntityState.Added;
-            db.Add(produto);
+            /*Primeira forma de uso:
+            db.Produtos.Add(produto);*/
 
+            //segunda forma de uso, e a mais usada e indicada:
+            db.Set<Produto>().Add(produto);
+            
+            /*Terceira forma, forçando o rastreamento da entidade:
+            db.Entry(produto).State = EntityState.Added;
+
+            //Quarta forma de uso:
+            db.Add(produto);*/
+
+            //Aqui ele salvará no db.
             var registros = db.SaveChanges();
             Console.WriteLine($"Total Registro(s): {registros}");
-        */}
+        }
     }
 }
