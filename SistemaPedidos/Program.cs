@@ -10,13 +10,17 @@ namespace SistemaPedidos
     class Program
     {
         static void Main(string[] args)
-        {/*
-            /*using var db = new Data.ApplicationContext();
+        {
+            using var db = new Data.ApplicationContext();
+
+            //Faz a migração no db, não é indica em prod.
             db.Database.Migrate();
+            
+            //Aqui ele verifica se á migrações pendentes, retorna um inumerable
             var existe = db.Database.GetPendingMigrations().Any();
             if(existe)
             {
-                // 
+                // aplique uma regra de negocio aqui, tipo finalizar aplicação ou realizar algo
             }
 
             //InserirDados();
