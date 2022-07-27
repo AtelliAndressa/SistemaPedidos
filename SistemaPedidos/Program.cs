@@ -127,7 +127,7 @@ namespace SistemaPedidos
                 //db.Clientes.Find(cliente.Id);
                 db.Clientes.FirstOrDefault(p => p.Id == cliente.Id);
             }
-        }
+        }*/
 
         private static void InserirDadosEmMassa()
         {
@@ -142,7 +142,7 @@ namespace SistemaPedidos
 
             var cliente = new Cliente
             {
-                Nome = "Rafael Almeida",
+                Name = "Rafael Almeida",
                 CEP = "99999000",
                 Cidade = "Itabaiana",
                 Estado = "SE",
@@ -153,7 +153,7 @@ namespace SistemaPedidos
             {
                 new Cliente
                 {
-                    Nome = "Teste 1",
+                    Name = "Teste 1",
                     CEP = "99999000",
                     Cidade = "Itabaiana",
                     Estado = "SE",
@@ -161,7 +161,7 @@ namespace SistemaPedidos
                 },
                 new Cliente
                 {
-                    Nome = "Teste 2",
+                    Name = "Teste 2",
                     CEP = "99999000",
                     Cidade = "Itabaiana",
                     Estado = "SE",
@@ -171,13 +171,13 @@ namespace SistemaPedidos
 
 
             using var db = new Data.ApplicationContext();
-            //db.AddRange(produto, cliente);
+            db.AddRange(produto, cliente);
             db.Set<Cliente>().AddRange(listaClientes);
-            //db.Clientes.AddRange(listaClientes);
+            db.Clientes.AddRange(listaClientes);
 
             var registros = db.SaveChanges();
             Console.WriteLine($"Total Registro(s): {registros}");
-        }*/
+        }
 
         private static void InserirDados()
         {
@@ -204,7 +204,7 @@ namespace SistemaPedidos
             //Quarta forma de uso:
             db.Add(produto);*/
 
-            //Aqui ele salvará no db.
+            //Aqui ele salvará no db tudo que foi rastreado.
             var registros = db.SaveChanges();
             Console.WriteLine($"Total Registro(s): {registros}");
         }

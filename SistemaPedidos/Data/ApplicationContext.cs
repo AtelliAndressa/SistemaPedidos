@@ -1,10 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SistemaPedidos.Domain;
 
 namespace SistemaPedidos.Data
 {
     public class ApplicationContext : DbContext
     {
+        //logging:
+        private static readonly ILoggerFactory _logger = LoggerFactory
+            .Create(prop => prop.AddConsole());
 
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
@@ -17,8 +21,11 @@ namespace SistemaPedidos.Data
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Esse método recebe uma string de conexão no paramêtro.
-            optionsBuilder.UseSqlServer("Data source=(localdb)\\mssqllocaldb;Initial Catalog=SistemaPedidos;Integrated Security=true");
+            //Esse método recebe uma string de conexão no paramêtro e mostrará no console o logging.
+            optionsBuilder
+                .UseLoggerFactory(_logger)
+                .EnableSensitiveDataLogging()
+                .UseSqlServer("Data source=(localdb)\\mssqllocaldb;Initial Catalog=SistemaPedidos;Integrated Security=true");
         }
 
         /// <summary>
