@@ -31,7 +31,10 @@ namespace SistemaPedidos.Data
                 p => p.EnableRetryOnFailure(
                     maxRetryCount: 2, 
                     maxRetryDelay: TimeSpan.FromSeconds(5), 
-                    errorNumbersToAdd: null));
+                    errorNumbersToAdd: null)
+
+                //aqui ele mudará o nome da tabela usada no db
+                    .MigrationsHistoryTable("curso_ef_core"));
         }
 
         /// <summary>
