@@ -26,6 +26,8 @@ namespace SistemaPedidos.Data
                 .UseLoggerFactory(_logger)
                 .EnableSensitiveDataLogging()
                 .UseSqlServer("Data source=(localdb)\\mssqllocaldb;Initial Catalog=SistemaPedidos;Integrated Security=true",
+                
+                //Aqui ele tentará refazer a conexão no db por 2 tentativas com delay de 5 seg
                 p => p.EnableRetryOnFailure(
                     maxRetryCount: 2, 
                     maxRetryDelay: TimeSpan.FromSeconds(5), 
