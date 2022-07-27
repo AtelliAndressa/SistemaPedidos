@@ -25,7 +25,11 @@ namespace SistemaPedidos.Data
             optionsBuilder
                 .UseLoggerFactory(_logger)
                 .EnableSensitiveDataLogging()
-                .UseSqlServer("Data source=(localdb)\\mssqllocaldb;Initial Catalog=SistemaPedidos;Integrated Security=true");
+                .UseSqlServer("Data source=(localdb)\\mssqllocaldb;Initial Catalog=SistemaPedidos;Integrated Security=true",
+                p => p.EnableRetryOnFailure(
+                    maxRetryCount: 2, 
+                    maxRetryDelay: TimeSpan.FromSeconds(5), 
+                    errorNumbersToAdd: null));
         }
 
         /// <summary>
@@ -38,6 +42,27 @@ namespace SistemaPedidos.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
+            MapearPropriedadesEsquecidas(modelBuilder);
         }    
+
+
+        private void MapearPropriedadesEsquecidas(ModelBuilder modelBuilder)
+        {
+            foreach(var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                var properties = entity.GetProperties().Where(p => p.ClrType == typeof(string)); 
+                foreach(var property in properties)
+                {
+                    if (string.IsNullOrEmpty(property.GetColumnType())
+                        && !property.GetMaxLength().HasValue)
+                    {
+                        //toda vez que ele achar uma propriedade do tipo string ele irá
+                        //configurar ela como varchar 100
+                        //property.SetMaxLength(100);
+                        property.SetColumnType("VARCHAR(100)");
+                    }
+                }
+            }
+        }
     }
 }

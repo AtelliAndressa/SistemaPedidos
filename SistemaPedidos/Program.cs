@@ -25,13 +25,13 @@ namespace SistemaPedidos
 
             //InserirDados();
             //InserirDadosEmMassa();
-            ConsultarDados();
+            //ConsultarDados();
             //CadastrarPedido();
             //ConsultarPedidoCarregamentoAdiantado();
             //AtualizarDados();
             //RemoverRegistro();
         }
-        /*
+        
         private static void RemoverRegistro()
         {
             using var db = new SistemaPedidos.Data.ApplicationContext();
@@ -47,8 +47,12 @@ namespace SistemaPedidos
 
         private static void AtualizarDados()
         {
+            //instânciando a base de dados:
             using var db = new Data.ApplicationContext();
-            //var cliente = db.Clientes.Find(1);
+
+            /*se fosse um registro especifico e soubesse o id poderia ser assim a chamada:
+            var cliente = db.Clientes.Find(1);
+            cliente.Nome = "Cliente alterado passo 1";*/
 
             var cliente = new Cliente
             {
@@ -64,17 +68,17 @@ namespace SistemaPedidos
             db.Attach(cliente);
             db.Entry(cliente).CurrentValues.SetValues(clienteDesconectado);
 
-            //db.Clientes.Update(cliente);
+            //db.Clientes.Update(cliente); //passo 1, método desnecessário.
             db.SaveChanges();
         }
 
         private static void ConsultarPedidoCarregamentoAdiantado()
         {
             using var db = new Data.ApplicationContext();
-            var pedidos = db
-                .Pedidos
-                .Include(p => p.Itens)
-                    .ThenInclude(p => p.Produto)
+            //está indo na base de dados e retornando todos os pedidos existentes na memória.
+            var pedidos = db.Pedidos
+                .Include(p => p.Itens) //aqui ele vai carregar tbm os itens do pedido
+                .ThenInclude(p => p.Produto)
                 .ToList();
 
             Console.WriteLine(pedidos.Count);
@@ -110,7 +114,7 @@ namespace SistemaPedidos
             db.Pedidos.Add(pedido);
 
             db.SaveChanges();
-        }*/
+        }
 
         private static void ConsultarDados()
         {
@@ -118,17 +122,18 @@ namespace SistemaPedidos
 
             //var consultaPorSintaxe = (from c in db.Clientes where c.Id>0 select c).ToList();
 
-            //usando o AsNoTracking não será rastreado em memória.
-            var consultaPorMetodo = db.Clientes.AsNoTracking()
+            //usando o AsNoTracking não será rastreado em memória, o EFcore já vai direto no db.
+            var consultaPorMetodoLinq = db.Clientes.AsNoTracking()
                 .Where(p => p.Id > 0)
                 .OrderBy(p => p.Id)
                 .ToList();
 
-            foreach (var cliente in consultaPorMetodo)
+            foreach (var cliente in consultaPorMetodoLinq)
             {
                 Console.WriteLine($"Consultando Cliente: {cliente.Id}");
                 //executa a busca primeiro em o que está em memória utilizando o find, ela esta sendo trackeada
                 //db.Clientes.Find(cliente.Id);
+                //O metódo FirstOrDefault já vai direto no db
                 db.Clientes.FirstOrDefault(p => p.Id == cliente.Id);
             }
         }
