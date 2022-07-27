@@ -6,7 +6,7 @@ namespace SistemaPedidos.Data
 {
     public class ApplicationContext : DbContext
     {
-        //logging:
+        //escrevendo o logging:
         private static readonly ILoggerFactory _logger = LoggerFactory
             .Create(prop => prop.AddConsole());
 

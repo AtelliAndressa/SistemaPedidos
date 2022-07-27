@@ -23,9 +23,9 @@ namespace SistemaPedidos
                 // aplique uma regra de negocio aqui, tipo finalizar aplicação ou realizar algo
             }
 
-            InserirDados();
+            //InserirDados();
             //InserirDadosEmMassa();
-            //ConsultarDados();
+            ConsultarDados();
             //CadastrarPedido();
             //ConsultarPedidoCarregamentoAdiantado();
             //AtualizarDados();
@@ -110,13 +110,16 @@ namespace SistemaPedidos
             db.Pedidos.Add(pedido);
 
             db.SaveChanges();
-        }
+        }*/
 
         private static void ConsultarDados()
         {
             using var db = new Data.ApplicationContext();
+
             //var consultaPorSintaxe = (from c in db.Clientes where c.Id>0 select c).ToList();
-            var consultaPorMetodo = db.Clientes
+
+            //usando o AsNoTracking não será rastreado em memória.
+            var consultaPorMetodo = db.Clientes.AsNoTracking()
                 .Where(p => p.Id > 0)
                 .OrderBy(p => p.Id)
                 .ToList();
@@ -124,10 +127,11 @@ namespace SistemaPedidos
             foreach (var cliente in consultaPorMetodo)
             {
                 Console.WriteLine($"Consultando Cliente: {cliente.Id}");
+                //executa a busca primeiro em o que está em memória utilizando o find, ela esta sendo trackeada
                 //db.Clientes.Find(cliente.Id);
                 db.Clientes.FirstOrDefault(p => p.Id == cliente.Id);
             }
-        }*/
+        }
 
         private static void InserirDadosEmMassa()
         {
@@ -172,6 +176,7 @@ namespace SistemaPedidos
 
             using var db = new Data.ApplicationContext();
             db.AddRange(produto, cliente);
+
             db.Set<Cliente>().AddRange(listaClientes);
             db.Clientes.AddRange(listaClientes);
 
